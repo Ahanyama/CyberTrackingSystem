@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Incident Reporting & Tracking</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Cyber Incident Tracker</h1>
+      <p class="tagline">Report, track, and resolve cyber incidents</p>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" data-target="home">Home</button>
+      <button class="nav-btn" data-target="report">Report Incident</button>
+      <button class="nav-btn" data-target="view">View Incidents</button>
+      <button class="nav-btn" data-target="admin">Admin Panel</button>
+    </nav>
+    <div class="user-area" id="userArea">
+      <span id="userName"></span>
+      <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="loginSection" class="card" aria-live="polite">
+      <h2>Welcome back</h2>
+      <p>Login to manage incidents. If you don’t have an account yet, register below.</p>
+
+      <div class="split">
+        <form id="loginForm" class="form-card">
+          <h3>Login</h3>
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" required autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" required autocomplete="current-password" />
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+          <p class="muted-text">
+            Don’t have an account? <button type="button" class="link-btn" id="showRegister">Register</button>
+          </p>
+        </form>
+
+        <form id="registerForm" class="form-card hidden">
+          <h3>Create an account</h3>
+          <div class="form-group">
+            <label for="regName">Name</label>
+            <input id="regName" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input id="regEmail" type="email" required />
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input id="regPassword" type="password" required />
+          </div>
+          <div class="form-group">
+            <label for="regRole">Role</label>
+            <select id="regRole" required>
+              <option value="Reporter">Reporter</option>
+              <option value="Investigator">Investigator</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <button class="btn btn-secondary" type="submit">Register</button>
+          <p class="muted-text">
+            Already have an account? <button type="button" class="link-btn" id="showLogin">Login</button>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section id="home" class="page hidden">
+      <div class="dashboard">
+        <div class="card">
+          <h2>Quick Start</h2>
+          <ul>
+            <li>Report new incidents from the <strong>Report Incident</strong> page.</li>
+            <li>View and filter incidents from <strong>View Incidents</strong>.</li>
+            <li>Admins can assign investigators and manage users.</li>
+            <li>Investigators can add resolution notes and close incidents.</li>
+          </ul>
+        </div>
+        <div class="card stats" id="statsCard">
+          <h2>Overview</h2>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-number" id="totalIncidents">0</div>
+              <div class="stat-label">Total incidents</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" id="pendingIncidents">0</div>
+              <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" id="inProgressIncidents">0</div>
+              <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" id="resolvedIncidents">0</div>
+              <div class="stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="report" class="page hidden">
+      <div class="card">
+        <h2>Report a new incident</h2>
+        <form id="reportForm" class="form-card">
+          <div class="form-group">
+            <label for="incidentTitle">Title</label>
+            <input id="incidentTitle" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="incidentDescription">Description</label>
+            <textarea id="incidentDescription" rows="5" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="incidentSeverity">Severity</label>
+            <select id="incidentSeverity" required>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Submit Incident</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="view" class="page hidden">
+      <div class="filters card">
+        <h2>Filter incidents</h2>
+        <div class="grid">
+          <div class="form-group">
+            <label for="filterSeverity">Severity</label>
+            <select id="filterSeverity">
+              <option value="">All</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus">
+              <option value="">All</option>
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-secondary" id="applyFilters">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="incidentsList" class="incident-grid"></div>
+    </section>
+
+    <section id="admin" class="page hidden">
+      <div class="card">
+        <h2>Admin Panel</h2>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="userList">Users</button>
+          <button class="tab-btn" data-tab="assignments">Assignments</button>
+          <button class="tab-btn" data-tab="allIncidents">All Incidents</button>
+        </div>
+
+        <div class="tab-content" id="userList">
+          <h3>Users</h3>
+          <div id="usersTable" class="table-scroll"></div>
+        </div>
+
+        <div class="tab-content hidden" id="assignments">
+          <h3>Assign Investigator</h3>
+          <form id="assignForm" class="form-card">
+            <div class="form-group">
+              <label for="assignIncident">Incident</label>
+              <select id="assignIncident" required></select>
+            </div>
+            <div class="form-group">
+              <label for="assignInvestigator">Investigator</label>
+              <select id="assignInvestigator" required></select>
+            </div>
+            <button class="btn btn-primary" type="submit">Assign</button>
+          </form>
+        </div>
+
+        <div class="tab-content hidden" id="allIncidents">
+          <h3>All incidents</h3>
+          <div id="adminIncidents" class="incident-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "cyber-tracking-system",
+  "version": "1.0.0",
+  "description": "Cyber Incident Reporting & Tracking System",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-all": "npm install && cd backend && npm install",
+    "backend": "cd backend && npm start",
+    "backend:dev": "cd backend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
